@@ -94,7 +94,7 @@ export const ValentineCard: React.FC = () => {
       <div className="relative z-10 flex flex-col items-center justify-center h-full w-full p-6 text-center">
         
         {/* Main Text */}
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12 drop-shadow-sm select-none">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-12 drop-shadow-sm select-none">
           {accepted ? (
             "Youpi <3"
           ) : (
@@ -115,7 +115,7 @@ export const ValentineCard: React.FC = () => {
           <div className="flex flex-row items-center gap-6">
             <button
               onClick={handleYesClick}
-              className="bg-[#4CAF50] hover:bg-[#43a047] text-white px-8 py-3 rounded-full shadow-[0_6px_15px_rgba(0,0,0,0.15)] transform transition-transform duration-200 hover:scale-105 active:scale-95 font-semibold text-lg border-none cursor-pointer outline-none focus:ring-4 focus:ring-green-200"
+              className="bg-[#4CAF50] hover:bg-[#43a047] text-white px-8 py-3 rounded-full shadow-[0_6px_15px_rgba(0,0,0,0.15)] transform transition-transform duration-200 hover:scale-105 active:scale-95 font-semibold text-sm border-none cursor-pointer outline-none focus:ring-4 focus:ring-green-200"
               aria-label="Oui, accepter"
             >
               Oui
@@ -143,7 +143,7 @@ export const ValentineCard: React.FC = () => {
                       transition: 'transform 0.2s ease',
                     }
               }
-              className="bg-[#F44336] text-white px-8 py-3 rounded-full shadow-[0_6px_15px_rgba(0,0,0,0.15)] font-semibold text-lg border-none cursor-pointer outline-none z-50"
+              className="bg-[#F44336] text-white px-8 py-3 rounded-full shadow-[0_6px_15px_rgba(0,0,0,0.15)] font-semibold text-sm border-none cursor-pointer outline-none z-50"
               aria-label="Non, refuser"
             >
               Non
