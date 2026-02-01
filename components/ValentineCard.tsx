@@ -77,14 +77,14 @@ export const ValentineCard: React.FC = () => {
     <div 
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      className="relative w-[92vw] max-w-[720px] aspect-[7/4] md:w-[70vw] lg:w-[640px] bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col transition-all duration-300"
+      className="relative w-[92vw] max-w-[720px] aspect-[3/4] sm:aspect-[7/4] md:w-[70vw] lg:w-[640px] bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col transition-all duration-300"
     >
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0">
         <img 
           src="https://dinosaures.atelier-lumieres.com/_astro/hero-desktop-new_d5qnia_1KrnQS.webp" 
           alt="Romantic Background" 
-          className="w-full h-full object-cover opacity-80"
+          className="w-full h-full object-cover opacity-80 scale-110 sm:scale-100"
         />
         {/* White overlay to ensure text readability and soft look */}
         <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px]"></div>
