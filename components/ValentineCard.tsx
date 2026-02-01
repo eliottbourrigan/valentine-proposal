@@ -96,7 +96,7 @@ export const ValentineCard: React.FC = () => {
         {/* Main Text */}
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-12 drop-shadow-sm select-none">
           {accepted ? (
-            "Youpi <3"
+            "Youpi :)"
           ) : (
             <>
               <span className="text-gray-800">
@@ -153,9 +153,9 @@ export const ValentineCard: React.FC = () => {
 
         {/* Celebration Decor (Simple hearts when accepted) */}
         {accepted && (
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-             <div className="animate-bounce text-6xl text-red-500 opacity-80 mt-32">❤️</div>
-          </div>
+           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+             <div className="animate-bounce text-6xl text-green-600 opacity-80 mt-32">🦖</div>
+           </div>
         )}
 
       </div>
