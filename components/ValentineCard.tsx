@@ -6,7 +6,7 @@ const getRandomInt = (min: number, max: number) => {
 };
 
 export const ValentineCard: React.FC = () => {
-  const [accepted, setAccepted] = useState(false);
+  const [step, setStep] = useState<'question' | 'form' | 'success'>('question');
   const [noBtnPosition, setNoBtnPosition] = useState<{ top: number; left: number } | null>(null);
   
   const cardRef = useRef<HTMLDivElement>(null);
@@ -35,8 +35,8 @@ export const ValentineCard: React.FC = () => {
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent | MouseEvent) => {
-    // If already accepted, no need to calculate
-    if (accepted) return;
+    // Only allow fleeing in the initial question step
+    if (step !== 'question') return;
     
     // Check refs 
     if (!noBtnRef.current || !cardRef.current) return;
@@ -55,7 +55,7 @@ export const ValentineCard: React.FC = () => {
     if (dist < FLEE_DISTANCE) {
       moveButton();
     }
-  }, [accepted, moveButton]);
+  }, [step, moveButton]);
 
   // Attach global mouse move when hovering card might be safer to catch fast movements,
   // but strictly the prompt asks for proximity. 
@@ -63,15 +63,25 @@ export const ValentineCard: React.FC = () => {
   
   // Handle touch start for mobile devices (tap near/on button moves it)
   const handleTouchStartNo = (e: React.TouchEvent) => {
-    if (!accepted) {
+    if (step === 'question') {
       e.preventDefault(); // Prevent click
       moveButton();
     }
   };
 
   const handleYesClick = () => {
-    setAccepted(true);
+    setStep('form');
   };
+
+  const handleFormOk = () => {
+    setStep('success');
+  };
+
+  const mailSubject = encodeURIComponent("J'accepte avec plaisir l'invitation 🦖");
+  const mailBody = encodeURIComponent(
+    "Coucou !\n\nJ'accepte avec plaisir l'invitation et je suis disponible jour et nuit (littéralement) pour toi.\n\nDis-moi quand tu veux, je suis partante ! 🦖💚"
+  );
+  const mailtoHref = `mailto:eliott.bourrigan@gmail.com?subject=${mailSubject}&body=${mailBody}`;
 
   return (
     <div 
@@ -95,8 +105,10 @@ export const ValentineCard: React.FC = () => {
         
         {/* Main Text */}
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-12 drop-shadow-sm select-none">
-          {accepted ? (
+          {step === 'success' ? (
             "Youpi :)"
+          ) : step === 'form' ? (
+            "Quand es-tu disponible ?"
           ) : (
             <>
               <span className="text-gray-800">
@@ -111,7 +123,7 @@ export const ValentineCard: React.FC = () => {
         </h1>
 
         {/* Buttons Container */}
-        {!accepted && (
+        {step === 'question' && (
           <div className="flex flex-row items-center gap-6">
             <button
               onClick={handleYesClick}
@@ -125,7 +137,7 @@ export const ValentineCard: React.FC = () => {
               ref={noBtnRef}
               onTouchStart={handleTouchStartNo}
               onClick={() => {
-                if (!accepted) {
+                if (step === 'question') {
                   moveButton();
                 }
               }}
@@ -151,11 +163,40 @@ export const ValentineCard: React.FC = () => {
           </div>
         )}
 
+        {step === 'form' && (
+          <div className="w-full max-w-[420px] bg-white/70 backdrop-blur-sm rounded-2xl border border-white/60 shadow-[0_10px_25px_rgba(0,0,0,0.08)] p-5 sm:p-6 text-left">
+            <div className="text-sm font-semibold text-gray-700 mb-3">Quand es-tu disponible ?</div>
+            <label className="flex items-center gap-3 p-4 rounded-xl bg-white/80 border border-gray-200 shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+              <input
+                type="radio"
+                name="availability"
+                checked
+                readOnly
+                className="h-4 w-4 accent-green-600"
+                aria-label="Absolument tous les jours pour toi"
+              />
+              <span className="text-sm sm:text-base text-gray-800">
+                Absolument tous les jours pour toi &lt;3
+              </span>
+            </label>
+            <a
+              href={mailtoHref}
+              onClick={handleFormOk}
+              className="mt-5 w-full inline-flex items-center justify-center bg-[#4CAF50] hover:bg-[#43a047] text-white px-6 py-3 rounded-full shadow-[0_6px_15px_rgba(0,0,0,0.15)] transform transition-transform duration-200 hover:scale-[1.02] active:scale-95 font-semibold text-sm border-none cursor-pointer outline-none focus:ring-4 focus:ring-green-200"
+              aria-label="Valider la disponibilité"
+            >
+              OK
+            </a>
+          </div>
+        )}
+
         {/* Celebration Decor (Simple hearts when accepted) */}
-        {accepted && (
-           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-             <div className="animate-bounce text-6xl text-green-600 opacity-80 mt-32">🦖</div>
-           </div>
+        {step === 'success' && (
+          <>
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div className="animate-bounce text-6xl text-green-600 opacity-80 mt-32">🦖</div>
+            </div>
+          </>
         )}
 
       </div>
